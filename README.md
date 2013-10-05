@@ -1,5 +1,5 @@
 #	Websocket Gui
-This gem uses Sinatra, EventMachine, and Web Sockets to make it easy to use the browser as a GUI for Ruby apps that
+This gem uses Sinatra, EventMachine, and WebSockets to make it easy to use the browser as a GUI for Ruby apps that
 would otherwise be stuck in the console.
 
 
@@ -65,7 +65,7 @@ The options can be set in several ways, each level overriding the previous:
 
 
 
-###	project-root/index.htm
+###	project-root/index.erb
 
 	<!doctype html>
 	<html>
@@ -127,7 +127,7 @@ The options can be set in several ways, each level overriding the previous:
 ## 	file structure
 	project-root/
 		app.rb
-		index.htm
+		index.erb
 		... (up to you)
 
 
@@ -135,4 +135,9 @@ The options can be set in several ways, each level overriding the previous:
 	$ ruby app.rb
 
 	This will start the socket server and sinatra, and launch a browser with your view.
+
+
+## todo
+* Create a small JS library that wraps the native websocket and makes it easy to post events to the server.
+* Expand event handlers so you can write events like `on_start do |params|` instead of having to do parse raw strings and do everything in on\_socket\_recv
 
