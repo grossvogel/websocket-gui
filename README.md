@@ -9,12 +9,12 @@ To use this gem, make a class that extends WebsocketGui::Base and a HTML/JS file
 
 ### Configuration
 The following configuration options are available:
-	:socket_port 	(8080)
-	:socket_host 	(127.0.0.1)
-	:http_port		(3000)
-	:http_host		(127.0.0.1)
-	:view			(:index)
-	:tick_interval	(nil)
+* :socket_port 		(8080)
+* :socket_host 		(127.0.0.1)
+* :http_port		(3000)
+* :http_host		(127.0.0.1)
+* :view			(:index)
+* :tick_interval	(nil)
 
 The options can be set in several ways, each level overriding the previous:
 1 In declaring your subclass of WebsocketGui::Base (like tick\_interval below)
@@ -22,7 +22,7 @@ The options can be set in several ways, each level overriding the previous:
 1 By passing an options hash to the run! method
 
 
-###	project-root/app.rb
+###	Sample Code: project-root/app.rb
 	require 'websocket-gui'
 
 	class App < WebsocketGui::Base
@@ -65,7 +65,7 @@ The options can be set in several ways, each level overriding the previous:
 
 
 
-###	project-root/index.erb
+###	Sample Code: project-root/index.erb
 
 	<!doctype html>
 	<html>
