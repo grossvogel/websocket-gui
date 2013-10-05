@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Use the browser as a GUI for local Ruby apps.}
   spec.homepage      = ""
   spec.license       = "MIT"
+  spec.homepage		 = "https://github.com/grossvogel/websocket-gui"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -28,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'sinatra', '~> 1.4.3'
   spec.add_runtime_dependency 'thin', '>= 1.5.1'
   spec.add_runtime_dependency 'launchy', '~> 2.3.0'
+  spec.add_runtime_dependency 'json', '>= 1.7.7'
 end

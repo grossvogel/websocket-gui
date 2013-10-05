@@ -13,11 +13,19 @@
 
 	<body>
 		<div id="connectedContainer" style="display:none;">
-			<textarea id="input"></textarea>
-			<input type="button" id="send" value="Send" />
+			<textarea id="input" rows="4" cols="40"></textarea>
+			<p>
+				<input type="button" id="send" value="Send" />
+			</p>
+			<p>
+				<input type="button" id="custom" value="Send Custom Event" />
+			</p>
 
 			<ul id="output"></ul>
-			<input type="button" id="disconnect" value="Disconnect" />
+
+			<p>
+				<input type="button" id="disconnect" value="Disconnect" />
+			</p>
 		</div>
 		<div id="notConnectedContainer">
 			<input type="button" id="connect" value="Connect" />
@@ -29,6 +37,12 @@
 				socket = new WebSocket("ws://localhost:8080");
 				var writeMessage = function (msg) {
 					$("<li></li>").text (msg).appendTo ($("#output"));
+				};
+				var sendEvent = function (event, params) {
+					socket.send (JSON.stringify ({
+						event: event,
+						params: params
+					}));
 				};
 				socket.onmessage = function (evt) {
 					writeMessage (evt.data);
@@ -51,6 +65,13 @@
 						socket.send(input.val ());
 						input.val ('');
 					}
+				});
+				$("#custom").on ('click', function () {
+					sendEvent('custom_button_click', {
+						a: 1,
+						b: "Two",
+						c: "III"
+					});
 				});
 			}
 

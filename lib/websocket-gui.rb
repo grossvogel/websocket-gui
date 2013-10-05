@@ -4,6 +4,7 @@ require "em-websocket"
 require "sinatra"
 require "thin"
 require "launchy"
+require "json"
 
 require "websocket-gui/base"
 require "websocket-gui/sinatra_wrapper"

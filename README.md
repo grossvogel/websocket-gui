@@ -9,12 +9,12 @@ To use this gem, make a class that extends WebsocketGui::Base and a HTML/JS file
 
 ### Configuration
 The following configuration options are available:
-* :socket_port 		(8080)
-* :socket_host 		(127.0.0.1)
-* :http_port		(3000)
-* :http_host		(127.0.0.1)
+* :socket\_port 		(8080)
+* :socket\_host 		(127.0.0.1)
+* :http\_port		(3000)
+* :http\_host		(127.0.0.1)
 * :view			(:index)
-* :tick_interval	(nil)
+* :tick\_interval	(nil)
 
 The options can be set in several ways, each level overriding the previous:
 1 In declaring your subclass of WebsocketGui::Base (like tick\_interval below)
@@ -57,6 +57,16 @@ The options can be set in several ways, each level overriding the previous:
 		on_socket_close do
 			puts "Socket closed."
 		end
+		
+		#	custom handler
+		#	trigger by sending JSON like this from the client:
+		#	{ event: 'custom_buttom_click', params: { ...} }
+		on_custom_button_click do |params|
+			socket_send "Custom event triggered! Params provided were:"
+			params.each do |k,v|
+				socket_send "#{k} = #{v}"
+			end
+		end
 	end
 
 	#	specify options in the constructor and/or the run method. 
@@ -93,6 +103,12 @@ The options can be set in several ways, each level overriding the previous:
 					var writeMessage = function (msg) {
 						$("<li></li>").text (msg).appendTo ($("#output"));
 					};
+					var sendEvent = function (event, params) {
+						socket.send (JSON.stringify ({
+							event: event,
+							params: params
+						}));
+					};
 					socket.onmessage = function (evt) {
 						writeMessage (evt.data);
 					};
@@ -115,6 +131,13 @@ The options can be set in several ways, each level overriding the previous:
 							input.val ('');
 						}
 					});
+					$("#custom").on ('click', function () {
+						sendEvent('custom_button_click', {
+							a: 1,
+							b: "Two",
+							c: "III"
+						});
+					});
 				}
 				$("#connect").on ('click', function () { connect (); } );
 				$("#disconnect").on ('click', function () { socket.close (); });
@@ -136,8 +159,4 @@ The options can be set in several ways, each level overriding the previous:
 
 	This will start the socket server and sinatra, and launch a browser with your view.
 
-
-## todo
-* Create a small JS library that wraps the native websocket and makes it easy to post events to the server.
-* Expand event handlers so you can write events like `on_start do |params|` instead of having to do parse raw strings and do everything in on\_socket\_recv
 

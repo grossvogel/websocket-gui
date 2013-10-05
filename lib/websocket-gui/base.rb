@@ -45,7 +45,7 @@ module WebsocketGui
 					end
 
 					socket.onmessage do |msg| 
-						socket_trigger(:on_socket_recv, msg)
+						process_message(msg)
 					end
 
 					socket.onclose do 
@@ -72,8 +72,31 @@ module WebsocketGui
 
 		private
 
+		def handler_exists?(method)
+			@config[method].kind_of? Proc
+		end
+
 		def socket_trigger(method, *args)
-			self.instance_exec(*args, &@config[method]) if @config[method].kind_of? Proc
+			self.instance_exec(*args, &@config[method]) if handler_exists? method
+		end
+
+		def process_message(msg)
+			begin
+				data = JSON.parse(msg)
+
+				if data && data['event'] && data['params']
+					event_method = ('on_' + data['event']).to_sym
+					if handler_exists? event_method
+						socket_trigger(event_method, data['params'])
+						return
+					end
+				end
+
+				rescue JSON::ParserError
+					#	fall through to trigger :on_socket_recv
+			end
+			
+			socket_trigger(:on_socket_recv, msg)
 		end
 	end
 end

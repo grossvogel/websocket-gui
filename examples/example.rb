@@ -22,6 +22,14 @@ class ExampleWebSocketApp < WebsocketGui::Base
 	on_socket_close do
 		puts "Socket closed."
 	end
+
+	#	custom handler
+	on_custom_button_click do |params|
+		socket_send "Custom event triggered! Params provided were:"
+		params.each do |k,v|
+			socket_send "#{k} = #{v}"
+		end
+	end
 end
 
 if __FILE__ == $0
