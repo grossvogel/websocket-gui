@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<title>Test Web Sockets</title>
+		<meta charset="utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<div id="connectedContainer" style="display:none;">
+			<textarea id="input"></textarea>
+			<input type="button" id="send" value="Send" />
+
+			<ul id="output"></ul>
+			<input type="button" id="disconnect" value="Disconnect" />
+		</div>
+		<div id="notConnectedContainer">
+			<input type="button" id="connect" value="Connect" />
+		</div>
+
+		<script type="text/javascript">
+			var socket;
+			var connect = function () {
+				socket = new WebSocket("ws://localhost:8080");
+				var writeMessage = function (msg) {
+					$("<li></li>").text (msg).appendTo ($("#output"));
+				};
+				socket.onmessage = function (evt) {
+					writeMessage (evt.data);
+				};
+				socket.onclose = function () { 
+					writeMessage ("Socket Closed!"); 
+					$("#connectedContainer").hide ();
+					$("#notConnectedContainer").show();
+					$("#output li").remove ();
+				}
+				socket.onopen = function () { 
+					writeMessage ("Socket Opened!"); 
+					$("#connectedContainer").show ();
+					$("#notConnectedContainer").hide ();
+				}
+				$("#send").on ('click', function () {
+					var input = $("#input");
+					if (input.val ())
+					{
+						socket.send(input.val ());
+						input.val ('');
+					}
+				});
+			}
+
+			$("#connect").on ('click', function () { connect (); } );
+			$("#disconnect").on ('click', function () { socket.close (); });
+			
+		</script>
+	</body>
+
+</html>
