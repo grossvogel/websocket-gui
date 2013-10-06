@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_runtime_dependency 'em-websocket', '~> 0.5.0'
   spec.add_runtime_dependency 'sinatra', '~> 1.4.3'
-  spec.add_runtime_dependency 'thin', '>= 1.5.1'
+  spec.add_runtime_dependency 'thin', '~> 1.5.1'
   spec.add_runtime_dependency 'launchy', '~> 2.3.0'
   spec.add_runtime_dependency 'json', '>= 1.7.7'
 end

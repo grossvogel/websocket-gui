@@ -2,7 +2,6 @@ $:.unshift(File.dirname(__FILE__) + '/../lib')
 
 require "em-websocket"
 require "sinatra"
-require "thin"
 require "launchy"
 require "json"
 
