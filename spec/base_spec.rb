@@ -6,13 +6,13 @@ describe ExampleWebSocketApp do
 	it { should respond_to(:run!) }
 	it { should respond_to(:socket_send) }
 	it { should respond_to(:socket_close) }
-	its(:config) { should be_an_instance_of(Hash) }
+	its(:websocket_config) { should be_an_instance_of(Hash) }
 
 	context "override Base defaults" do
 		let(:example) {
 			ExampleWebSocketApp.new(http_port: 80, http_host: "localhost")
 		}
-		let(:config) { example.config }
+		let(:config) { example.websocket_config }
 
 		it "has defaults inherited from Base" do
 			config[:socket_port].should equal(8080)
@@ -34,7 +34,7 @@ describe ExampleWebSocketApp do
 		let(:example) {
 			ExampleWebSocketApp.new(tick_interval: 1)
 		}
-		let(:config) { example.config }
+		let(:config) { example.websocket_config }
 
 		it "overrides already overridden defaults in constructor" do
 			config[:tick_interval].should equal(1)
